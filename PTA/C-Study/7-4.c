@@ -21,14 +21,14 @@ int main(int argc, char *argv[])
         scanf("%d", &a[i]);
     }
     
-    dumpArray(a, n1);
+    //dumpArray(a, n1);
 
     scanf("%d", &n2);
     for(i = 0; i < n2; i ++){
         scanf("%d", &b[i]);
     }
 
-    dumpArray(b, n2);
+    //dumpArray(b, n2);
 
     //find the unique number of two array
     for(i = 0; i < n1; i ++)
@@ -37,15 +37,12 @@ int main(int argc, char *argv[])
         
         for(j = 0; j < n2; j ++)
         {
-            //printf("a[%d]=%d b[%d]=%d\n", i, a[i], j, b[j]);
             if(a[i] == b[j])
             {
                 isUnique = 0;
                 break;
             }
         }
-
-        //printf("a[%d] = %d, isUnique: %d\n", i, a[i], isUnique);
 
         if (isUnique){
             //is it same with we have ?
@@ -58,6 +55,35 @@ int main(int argc, char *argv[])
 
             if(!skip){
                 c[k] = a[i];
+                k ++;
+            }
+        }
+    }
+
+    for(i = 0; i < n2; i ++)
+    {
+        int isUnique = 1;
+        
+        for(j = 0; j < n1; j ++)
+        {
+            if(b[i] == a[j])
+            {
+                isUnique = 0;
+                break;
+            }
+        }
+
+        if (isUnique){
+            //is it same with we have ?
+            int kk = 0, skip = 0;
+            for(kk = 0; kk < k; kk ++){
+                if(c[kk] == b[i]){
+                    skip = 1;
+                }
+            }
+
+            if(!skip){
+                c[k] = b[i];
                 k ++;
             }
         }
