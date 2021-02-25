@@ -16,7 +16,7 @@ int main(void)
         height_n = (init_height) / 2.0;
         distance = distance + init_height + height_n;
         init_height /= 2.0;
-        //printf("distance:%.1lf height_n:%.1lf n:%d init_height:%lf\n", distance, height_n, n, init_height);
+
         n --;
     }
     
