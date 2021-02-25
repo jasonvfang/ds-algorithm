@@ -34,8 +34,10 @@ int main(int argc, char *argv[])
     for(i = 0; i < n1; i ++)
     {
         int isUnique = 1;
+        
         for(j = 0; j < n2; j ++)
         {
+            //printf("a[%d]=%d b[%d]=%d\n", i, a[i], j, b[j]);
             if(a[i] == b[j])
             {
                 isUnique = 0;
@@ -43,9 +45,21 @@ int main(int argc, char *argv[])
             }
         }
 
+        //printf("a[%d] = %d, isUnique: %d\n", i, a[i], isUnique);
+
         if (isUnique){
-            c[k] = a[i];
-            k ++;
+            //is it same with we have ?
+            int kk = 0, skip = 0;
+            for(kk = 0; kk < k; kk ++){
+                if(c[kk] == a[i]){
+                    skip = 1;
+                }
+            }
+
+            if(!skip){
+                c[k] = a[i];
+                k ++;
+            }
         }
     }
 
