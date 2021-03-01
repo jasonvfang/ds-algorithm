@@ -135,7 +135,7 @@ void print_list_noheader(struct ListNode *list)
 struct ListNode* mergeTwoLists(struct ListNode* l1, struct ListNode* l2)
 {
     struct ListNode *p1 = NULL, *m1 = NULL;
-    struct ListNode *retList = NULL, *LastNode = NULL, *tmpNode = NULL;
+    struct ListNode *retList = NULL, *tail = NULL;
     
     p1 = l1;
     m1 = l2;
@@ -146,18 +146,14 @@ struct ListNode* mergeTwoLists(struct ListNode* l1, struct ListNode* l2)
         
     if (m1 == NULL)
         return p1;
-    
-    //Neither of the two lists are null.
-    //Merge them into one list.
+
     while (p1 || m1)
     {
         if (p1 == NULL){
-            tmpNode = m1;
             break;
         }
 
         if (m1 == NULL){
-            tmpNode = p1;
             break;
         }
 
@@ -165,11 +161,11 @@ struct ListNode* mergeTwoLists(struct ListNode* l1, struct ListNode* l2)
         {            
             if (retList == NULL){
                 retList = m1;
-                LastNode = m1;
+                tail = m1;
             }
             else{
-                LastNode->next = m1;
-                LastNode = m1;
+                tail->next = m1;
+                tail = m1;
             }
 
             m1 = m1->next;
@@ -178,24 +174,27 @@ struct ListNode* mergeTwoLists(struct ListNode* l1, struct ListNode* l2)
         {
             if (retList == NULL){
                 retList = p1;
-                LastNode = p1;
+                tail = p1;
             }
             else{
-                LastNode->next = p1;
-                LastNode = p1;
+                tail->next = p1;
+                tail = p1;
             }
 
             p1 = p1->next;                
         }
     }
 
-    while (tmpNode)
+    //Append the tail of unfetched list.
+    if (p1)
     {
-         LastNode->next = tmpNode;
-         LastNode = tmpNode;
-         tmpNode = tmpNode->next;
+         tail->next = p1;
     }
-    
+    else if (m1)
+    {
+         tail->next = m1;
+    }
+
     return retList;
 }
 
