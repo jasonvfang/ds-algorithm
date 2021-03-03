@@ -166,6 +166,46 @@ struct ListNode* reverseKGroup(struct ListNode* head, int k)
 
     return retList;
 }
+
+
+//recurse
+int size(struct ListNode *head)
+{
+    int count=0;
+    while(head)
+    {
+        count++;
+        head=head->next;
+    }
+    return count;
+}
+
+struct ListNode* reverseKGroupRecurse(struct ListNode* head, int k) 
+{
+    struct ListNode *curr=head,*later=NULL,*prev=NULL;
+    int count=0;
+    while(count!=k && curr)
+    {
+        later=curr->next;
+        curr->next=prev;
+        prev=curr;
+        curr=later;
+        count++;
+    }
+    if(curr)
+    {
+        if(size(curr)>=k)
+        {
+            head->next=reverseKGroupRecurse(curr,k);
+        }
+        else
+        {
+            head->next=curr;
+        }
+    }
+    return prev;
+}
+
 int main(int argc, char *argv[])
 {
     ListNode_init(&ListHead_1, 1, 7);
@@ -174,7 +214,7 @@ int main(int argc, char *argv[])
     print_list(&ListHead_1);
     int k = atoi(argv[1]);
 
-    struct ListNode *newList = reverseKGroup(ListHead_1.next, k);
+    struct ListNode *newList = reverseKGroupRecurse(ListHead_1.next, k);
     //struct ListNode *newList = reverseNodes(ListHead_1.next);
     printf("New List:\n");
     print_list_noheader(newList);
