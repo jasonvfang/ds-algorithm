@@ -133,6 +133,48 @@ struct ListNode* rotateRight(struct ListNode* head, int k)
     return head;
 }
 
+struct ListNode* rotateRight2(struct ListNode* head, int k)
+{
+    if (head && k > 0)
+    {
+        struct ListNode* pTail = head;
+        struct ListNode* pCurr = head;
+        int length = 0, count = 0;
+
+        //Find the last node.
+        while (pTail)
+        {
+            if (NULL == pTail->next)
+            {
+                length ++;
+                break;
+            }
+
+            length ++;
+            pTail = pTail->next;
+        }
+
+        if (length == 1 || k == length)
+        {
+            return head;
+        }
+
+        k = k % length;
+        count = length - (k + 1);
+
+        while (count --)
+        {
+            pCurr = pCurr->next;
+        }
+
+        pTail->next = head;
+        head = pCurr->next;
+        pCurr->next = NULL;
+    }
+
+    return head;
+}
+
 
 int main(int argc, char *argv[])
 {
@@ -142,7 +184,7 @@ int main(int argc, char *argv[])
     print_list(&ListHead_1);
     int k = atoi(argv[1]);
 
-    struct ListNode *newList = rotateRight(ListHead_1.next, k);
+    struct ListNode *newList = rotateRight2(ListHead_1.next, k);
 
     printf("New List:\n");
     print_list_noheader(newList);
