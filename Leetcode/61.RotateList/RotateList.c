@@ -78,7 +78,56 @@ struct ListNode* rotateRight(struct ListNode* head, int k)
 {
     if (head && k > 0)
     {
-        
+        struct ListNode* pTmp = head->next;
+        struct ListNode* pPrev = head;
+        struct ListNode* pheadAnchor = head;
+        int length = 0;
+
+        //Find the last node.
+        while (pTmp)
+        {
+            length ++;
+            if (NULL == pTmp->next)
+            {
+                length ++;
+                break;
+            }
+           
+            pPrev = pTmp;
+            pTmp = pTmp->next;
+        }
+
+        if (pTmp == NULL && pPrev == pheadAnchor)
+        {
+            //only one node
+            return head;
+        }
+
+        k = k % length;
+
+        //Do rotate and starts with the last node.
+        while (k --)
+        {
+            pTmp->next = pheadAnchor;
+            pheadAnchor = pTmp;
+            pPrev->next = NULL;
+
+            struct ListNode* p = pheadAnchor;
+            while (p)
+            {
+                if (p->next == pPrev)
+                {
+                    break;
+                }
+
+                p = p->next;
+            }
+
+            pTmp = pPrev;
+            pPrev = p;
+        }
+
+        head = pheadAnchor;
     }
 
     return head;
