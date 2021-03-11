@@ -83,7 +83,46 @@ void print_list_noheader(struct ListNode *list)
 
 
 struct ListNode* partition(struct ListNode* head, int x){
+    struct ListNode *BeforeList = NULL;
+    struct ListNode *AfterList = NULL;
+    struct ListNode *pheadAnchor = head;
+    struct ListNode *pheadAfter = NULL;
 
+    while (head)
+    {
+        struct ListNode *tmp = head->next;
+        if (head->val < x){
+            if (BeforeList == NULL){
+                BeforeList = head;
+                head->next = NULL;
+                pheadAnchor = BeforeList;
+            }else{
+                BeforeList->next = head;
+                BeforeList = head;
+                head->next = NULL;
+            }
+        }else{
+            if (AfterList == NULL){
+                AfterList = head;
+                head->next = NULL;
+                pheadAfter = AfterList;
+            }else{
+                AfterList->next = head;
+                AfterList = head;
+                head->next = NULL;
+            }            
+        }
+
+        head = tmp;
+    }
+    
+    //combine two lists
+    if (pheadAfter && BeforeList)
+    {
+        BeforeList->next = pheadAfter;
+    }
+    
+    return pheadAnchor;
 }
 
 int main(int argc, char *argv[])
@@ -93,7 +132,7 @@ int main(int argc, char *argv[])
     printf("List:\n");
     print_list(&ListHead_1);
 
-    struct ListNode *newList = partition(ListHead_1.next, 7);
+    struct ListNode *newList = partition(ListHead_1.next, 5);
 
     printf("New List:\n");
     print_list_noheader(newList);
