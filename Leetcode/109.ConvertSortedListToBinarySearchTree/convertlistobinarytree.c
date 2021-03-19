@@ -141,21 +141,37 @@ struct TreeNode* sortedListToBST(struct ListNode* head)
         return root;
     }
 
-    
     root->left = sortedListToBST(head);
     root->right = sortedListToBST(midNode->next);
 
     return root;
 }
 
+
+void traverse(struct TreeNode *root)
+{
+    if (root == NULL)
+        return;
+
+    if (root->left)
+        traverse(root->left);
+    
+    printf(" %d ", root->val);
+    
+    if (root->right)
+        traverse(root->right);
+}
+
 int main(int argc, char *argv[])
 {
     ListNode_init(&ListHead_1, 1, 5);
 
-    printf("List:\n");
-    print_list(&ListHead_1);
+    //printf("List:\n");
+    //print_list(&ListHead_1);
 
-    struct TreeNode* bst = sortedListToBST(ListHead_1.next, 2, 4);
+    struct TreeNode* bst = sortedListToBST(ListHead_1.next);
+
+    traverse(bst);
 
     return 0;
 }
